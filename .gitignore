@@ -8,3 +8,5 @@ tts/
 __pycache__/
 remotion/src/timeline.json
 remotion/src/emoji.json
+scripts/
+scripts-*/
