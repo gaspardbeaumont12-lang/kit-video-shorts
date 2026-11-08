@@ -1,0 +1,231 @@
+{
+ "product": {
+  "title": "Rattraper son retard avant les partiels",
+  "subtitle": "guide + planner",
+  "brand": "Victor Scale",
+  "price": "6,90 €",
+  "highlight": "RETARD"
+ },
+ "scenes": [
+  {
+   "id": "hook",
+   "type": "hook_title",
+   "enter": "none",
+   "say": "Quatre heures de révision… et rien ne reste ?",
+   "show": "4 heures de révision… et rien ne reste ?",
+   "params": {
+    "lines": [
+     "4H DE",
+     "RÉVISION…",
+     {
+      "text": "ET RIEN",
+      "color": "#E63946"
+     },
+     {
+      "text": "NE RESTE ?",
+      "color": "#E63946"
+     }
+    ],
+    "emoji": "face-with-spiral-eyes"
+   },
+   "colors": {
+    "rien": "#E63946"
+   },
+   "cues": [
+    {
+     "id": "l1",
+     "at": "word:révision"
+    },
+    {
+     "id": "l2",
+     "at": "word:rien"
+    },
+    {
+     "id": "l3",
+     "at": "word:reste"
+    }
+   ]
+  },
+  {
+   "id": "pause",
+   "type": "quote",
+   "enter": "whip_left",
+   "say": "Tu prends cinq minutes de pause, et une heure après, t'es encore sur ton téléphone.",
+   "show": "Tu prends 5 minutes de pause, et 1 heure après, t'es encore sur ton téléphone.",
+   "params": {
+    "header": "TOI, PENDANT TES RÉVISIONS :",
+    "messages": [
+     {
+      "text": "Allez, juste 5 minutes de pause",
+      "side": "right"
+     },
+     {
+      "text": "1 heure plus tard…",
+      "side": "left",
+      "emoji": "mobile-phone"
+     }
+    ]
+   },
+   "emoji": {
+    "téléphone": "mobile-phone"
+   },
+   "cues": [
+    {
+     "id": "m1",
+     "at": "word:pause"
+    },
+    {
+     "id": "m2",
+     "at": "word:après"
+    }
+   ]
+  },
+  {
+   "id": "minuteur",
+   "type": "timer",
+   "enter": "zoom",
+   "say": "Essaie plutôt ça : vingt-cinq minutes à fond, puis cinq minutes de pause.",
+   "show": "Essaie plutôt ça : 25 minutes à fond, puis 5 minutes de pause.",
+   "params": {
+    "header": "25 MIN À FOND",
+    "from": "25:00",
+    "label": "CONCENTRÉ",
+    "emoji": "stopwatch",
+    "sub": "PUIS 5 MIN DE PAUSE",
+    "sub_emoji": "hot-beverage"
+   },
+   "colors": {
+    "vingt-cinq": "#2563EB"
+   },
+   "cues": [
+    {
+     "id": "header",
+     "at": "word:Essaie"
+    },
+    {
+     "id": "start",
+     "at": "word:vingt-cinq"
+    },
+    {
+     "id": "done",
+     "at": "word:fond:end"
+    },
+    {
+     "id": "sub",
+     "at": "word:pause"
+    }
+   ]
+  },
+  {
+   "id": "avant",
+   "type": "checklist",
+   "enter": "whip_right",
+   "say": "Avant de lancer le minuteur : téléphone dans une autre pièce, un seul cours, et c'est parti.",
+   "params": {
+    "header": "AVANT DE COMMENCER",
+    "items": [
+     "Téléphone dans une autre pièce",
+     "Un seul cours à la fois",
+     "Minuteur lancé"
+    ]
+   },
+   "cues": [
+    {
+     "id": "header",
+     "at": "word:Avant"
+    },
+    {
+     "id": "i1",
+     "at": "word:téléphone"
+    },
+    {
+     "id": "i2",
+     "at": "word:seul"
+    },
+    {
+     "id": "i3",
+     "at": "word:parti"
+    }
+   ]
+  },
+  {
+   "id": "habitude",
+   "type": "emoji_focus",
+   "enter": "whip_left",
+   "say": "Fais-le tous les jours, et ça devient une habitude.",
+   "params": {
+    "emoji": "brain",
+    "word": "UNE HABITUDE",
+    "sub": "pas une corvée"
+   },
+   "cues": [
+    {
+     "id": "emoji",
+     "at": "word:Fais-le"
+    },
+    {
+     "id": "word",
+     "at": "word:habitude"
+    },
+    {
+     "id": "sub",
+     "at": "word:habitude:end"
+    }
+   ]
+  },
+  {
+   "id": "produit",
+   "type": "product_reveal",
+   "enter": "zoom",
+   "say": "Mon guide pour rattraper ton retard est dans ma bio. Six euros quatre-vingt-dix.",
+   "show": "Mon guide pour rattraper ton retard est dans ma bio. 6,90 € _",
+   "emoji": {
+    "bio": "backhand-index-pointing-up"
+   },
+   "cues": [
+    {
+     "id": "shine",
+     "at": "word:rattraper"
+    },
+    {
+     "id": "bio",
+     "at": "word:bio"
+    },
+    {
+     "id": "price",
+     "at": "word:Six"
+    }
+   ]
+  },
+  {
+   "id": "fin",
+   "type": "cta",
+   "enter": "whip_right",
+   "say": "Lance ton premier minuteur ce soir. Pas demain.",
+   "params": {
+    "top": "LANCE TON MINUTEUR",
+    "top_emoji": "stopwatch",
+    "line1": "CE SOIR",
+    "line2": "PAS DEMAIN"
+   },
+   "colors": {
+    "demain": "#E63946"
+   },
+   "cues": [
+    {
+     "id": "line1",
+     "at": "word:soir"
+    },
+    {
+     "id": "line2",
+     "at": "word:demain"
+    },
+    {
+     "id": "chip",
+     "at": "word:demain",
+     "offset": 0.4
+    }
+   ]
+  }
+ ]
+}

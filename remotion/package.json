@@ -1,0 +1,14 @@
+{
+  "name": "kit-video-shorts",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "remotion": "4.0.541",
+    "@remotion/cli": "4.0.541",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "@fontsource/montserrat": "5.3.0",
+    "@fontsource/permanent-marker": "5.3.0",
+    "@iconify-json/noto": "1.2.10"
+  }
+}
