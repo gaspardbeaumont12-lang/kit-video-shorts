@@ -9,7 +9,7 @@ bash setup.sh                                                   # installe tout 
 bash make_video.sh exemples/rattraper-retard.json out/test      # ≈ 2,5 min → out/test.mp4 + out/test_planche.png
 ```
 
-- Écrire une vidéo : lire **SCENES.md** (règles, 13 types de scènes, structures qui marchent).
+- Écrire une vidéo : lire **SCENES.md** (règles, 14 types de scènes, structures qui marchent, fin « verrouillée » avant le produit).
 - `engine/build.py` : voix (Kokoro, voix `ff_siwis`), repères, bruitages, musique, mixage → `remotion/src/timeline.json`.
 - `remotion/src/` : les scènes animées. `engine/qa.py` : planche de contrôle + mesures.
 
