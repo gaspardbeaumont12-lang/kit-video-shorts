@@ -208,6 +208,18 @@ def sfx_alarm(dur=0.7):
     x *= np.minimum(t / 0.02, 1) * np.minimum((dur - t) / 0.12, 1)
     return stereo(peak_norm(x)), 0.0
 
+def sfx_lock(seed=71):
+    """Cadenas qui se ferme : deux clics métalliques + un « clac » sourd."""
+    n = int(0.45 * SR); t = np.arange(n) / SR; rng = np.random.default_rng(seed)
+    x = np.zeros(n)
+    for st, g in ((0.0, 0.8), (0.07, 1.0)):
+        tt = np.clip(t - st, 0, None)
+        x += bp(rng.standard_normal(n), 2500, 8000) * np.exp(-tt / 0.006) * (t >= st) * g
+        x += np.sin(2 * np.pi * 3400 * tt) * np.exp(-tt / 0.02) * (t >= st) * 0.25 * g
+    tt = np.clip(t - 0.07, 0, None)
+    x += lp(rng.standard_normal(n), 400) * np.exp(-tt / 0.04) * (t >= 0.07) * 0.9
+    return stereo(peak_norm(x)), 0.07
+
 def sfx_pop_roll(n, spacing):
     total = (n - 1) * spacing + 0.15
     y = np.zeros((int(total * SR) + 100, 2), np.float32)
@@ -241,6 +253,7 @@ SFX = {
     "sparkle": lambda c: sfx_sparkle(),
     "kaching": lambda c: sfx_kaching(),
     "alarm": lambda c: sfx_alarm(),
+    "lock": lambda c: sfx_lock(),
     "pop_roll": lambda c: sfx_pop_roll(c.get("n", 4), c.get("spacing", 0.07)),
 }
 SFX_BASE_DB = -7.0  # crête d'un bruitage à vol = 1.0, avant normalisation finale
@@ -300,6 +313,10 @@ SCENE_TYPES = {
                                     "_start": {"sfx": "boom", "vol": 0.85, "impact": 20, "flash": 0.55},
                                     "shine": {"sfx": "sparkle", "vol": 0.4}, "bio": {"sfx": "pop", "vol": 0.6, "punch": 0.05},
                                     "price": {"sfx": "kaching", "vol": 0.6, "impact": 10}}},
+    "locked": {"required": lambda sc: ["list", "lock"], "params": ["items"],
+               "defaults": {"header": {"sfx": "pop", "vol": 0.6},
+                            "list": {"sfx": "pop_roll", "spacing": 0.09, "vol": 0.5},
+                            "lock": {"sfx": "lock", "vol": 0.8, "impact": 12, "punch": 0.05}}},
     "cta": {"required": lambda sc: ["line1"] + (["line2"] if sc["params"].get("line2") else []), "params": ["line1"],
             "defaults": {"line1": {"sfx": "impact", "vol": 0.7, "impact": 14, "punch": 0.07},
                          "line2": {"sfx": "marker", "vol": 0.55}, "chip": {"sfx": "pop", "vol": 0.55}}},
@@ -433,7 +450,7 @@ def tts(text, voice, speed):
 
 # ================================================================== emojis utilisés (Noto, Apache-2.0)
 EMOJI_DEFAULTS = ["sparkles", "warning", "check-mark-button", "cross-mark", "crescent-moon", "backhand-index-pointing-up",
-                  "alarm-clock", "anxious-face-with-sweat", "graduation-cap", "stopwatch", "backhand-index-pointing-down"]
+                  "alarm-clock", "anxious-face-with-sweat", "graduation-cap", "stopwatch", "backhand-index-pointing-down", "locked"]
 
 def collect_emojis(obj, out):
     if isinstance(obj, dict):

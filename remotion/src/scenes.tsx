@@ -598,6 +598,50 @@ export const ProductReveal: React.FC<P> = ({ scene }) => {
   );
 };
 
+// ================================================================== locked : la suite verrouillée (mystère avant le produit)
+export const Locked: React.FC<P> = ({ scene }) => {
+  const f = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const p = scene.params;
+  const items: { text: string; open?: boolean; blur?: boolean }[] = (p.items ?? []).slice(0, 5);
+  const n = Math.max(1, items.length);
+  const h = cue(scene, "header", firstWord(scene));
+  const list = cue(scene, "list", h + 6);
+  const lock = cue(scene, "lock", list + 20);
+  const rowH = Math.min(165, Math.floor(480 / n));
+  const top = 470;
+  const stampP = sp(f, lock + 4, fps, SLAM);
+  return (
+    <AbsoluteFill>
+      <StepHeader text={p.header ?? "LA SUITE ?"} at={h} emoji={p.header_emoji ?? "locked"} />
+      {items.map((it, i) => {
+        const at = list + i * 4;
+        if (f < at) return null;
+        const s = sp(f, at, fps, { damping: 12, stiffness: 260, mass: 0.6 });
+        const open = !!it.open;
+        const shake = !open && f >= lock ? Math.sin((f - lock) * 2.4) * 12 * Math.exp(-(f - lock) / 10) : 0;
+        const glow = !open && f >= lock ? 0.5 + 0.5 * Math.abs(Math.sin((f - lock) / 6)) : 0;
+        return (
+          <div key={i} style={{ position: "absolute", left: 80, top: top + i * rowH, width: 920, height: rowH - 22, borderRadius: 24,
+            background: open ? "#DDF7E6" : C.navy, border: `5px solid ${C.ink}`, boxShadow: `0 8px 0 ${C.ink}, 0 0 ${30 * glow}px rgba(255,228,94,${0.8 * glow})`,
+            display: "flex", alignItems: "center", gap: 22, padding: "0 28px", transform: `translateX(${(1 - s) * -900 + shake}px)` }}>
+            <Emoji name={open ? "check-mark-button" : "locked"} size={Math.min(84, rowH * 0.6)} />
+            <div style={{ fontFamily: FONT, fontWeight: 900, fontSize: it.text.length <= 16 ? 60 : Math.max(40, Math.min(52, Math.floor((rowH - 30) / 2.2))),
+              lineHeight: 1.05, maxWidth: open ? 720 : 600, color: open ? C.ink : "white", filter: !open && it.blur ? "blur(10px)" : "none" }}>{it.text}</div>
+            {!open && <div style={{ marginLeft: "auto", fontFamily: FONT, fontWeight: 900, fontSize: Math.min(64, rowH * 0.45), color: C.yellow }}>???</div>}
+          </div>
+        );
+      })}
+      {p.stamp && f >= lock + 4 && (
+        <div style={{ position: "absolute", left: 0, right: 0, top: Math.min(1030, top + n * rowH + 8), display: "flex", justifyContent: "center" }}>
+          <div style={{ transform: `scale(${2.2 - 1.2 * stampP}) rotate(-5deg)`, opacity: Math.min(1, stampP * 2), border: `8px solid ${C.red}`, borderRadius: 18,
+            padding: "6px 30px", fontFamily: FONT, fontWeight: 900, fontSize: fitFont(p.stamp, 860, 80, 44), color: C.red, background: "rgba(255,255,255,0.95)" }}>{p.stamp}</div>
+        </div>
+      )}
+    </AbsoluteFill>
+  );
+};
+
 // ================================================================== cta : appel à l'action final
 export const Cta: React.FC<P> = ({ scene }) => {
   const f = useCurrentFrame();
@@ -655,6 +699,7 @@ export const SCENES: Record<string, React.FC<P>> = {
   timer: Timer,
   emoji_focus: EmojiFocus,
   product_reveal: ProductReveal,
+  locked: Locked,
   cta: Cta,
   // anciens noms (compatibilité)
   order_cross: CrossList,

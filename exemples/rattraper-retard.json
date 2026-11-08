@@ -1,62 +1,300 @@
 {
- "product": {"title": "Rattraper son retard avant les partiels", "subtitle": "guide + planner", "brand": "Victor Scale", "price": "6,90 €", "highlight": "RETARD"},
+ "product": {
+  "title": "Rattraper son retard avant les partiels",
+  "subtitle": "guide + planner",
+  "brand": "Victor Scale",
+  "price": "6,90 €",
+  "highlight": "RETARD"
+ },
  "scenes": [
-  {"id": "hook", "type": "hook_counter", "enter": "none",
+  {
+   "id": "hook",
+   "type": "hook_counter",
+   "enter": "none",
    "say": "T'as trente cours de retard et les partiels arrivent ?",
    "show": "T'as 30 cours de retard et les partiels arrivent ?",
-   "params": {"title": ["SI T'AS DÉCROCHÉ", "DEPUIS LA RENTRÉE"], "title_emoji": "backhand-index-pointing-down",
-              "count_from": 9, "count_to": 30, "label": "COURS DE RETARD",
-              "cards": ["Micro-éco", "Droit civil", "Stats", "Anglais", "Socio", "Compta", "Histoire", "Algèbre", "Biologie", "Marketing"]},
-   "emoji": {"retard": "anxious-face-with-sweat", "partiels": "alarm-clock"},
-   "colors": {"trente": "#E63946", "retard": "#E63946"},
-   "cues": [{"id": "count_end", "at": "word:retard:end"}, {"id": "alarm", "at": "word:partiels"}]},
-
-  {"id": "stop", "type": "cross_list", "enter": "cut",
+   "params": {
+    "title": [
+     "SI T'AS DÉCROCHÉ",
+     "DEPUIS LA RENTRÉE"
+    ],
+    "title_emoji": "backhand-index-pointing-down",
+    "count_from": 9,
+    "count_to": 30,
+    "label": "COURS DE RETARD",
+    "cards": [
+     "Micro-éco",
+     "Droit civil",
+     "Stats",
+     "Anglais",
+     "Socio",
+     "Compta",
+     "Histoire",
+     "Algèbre",
+     "Biologie",
+     "Marketing"
+    ]
+   },
+   "emoji": {
+    "retard": "anxious-face-with-sweat",
+    "partiels": "alarm-clock"
+   },
+   "colors": {
+    "trente": "#E63946",
+    "retard": "#E63946"
+   },
+   "cues": [
+    {
+     "id": "count_end",
+     "at": "word:retard:end"
+    },
+    {
+     "id": "alarm",
+     "at": "word:partiels"
+    }
+   ]
+  },
+  {
+   "id": "stop",
+   "type": "cross_list",
+   "enter": "cut",
    "say": "Surtout, ne les reprends pas dans l'ordre.",
-   "params": {"header": "SURTOUT", "items": ["Cours 1", "Cours 2", "Cours 3", "Cours 4", "Cours 5"], "stamp": "PAS DANS L'ORDRE"},
-   "emoji": {"l'ordre": "cross-mark"}, "colors": {"l'ordre": "#E63946"},
-   "cues": [{"id": "header", "at": "word:Surtout"}, {"id": "list", "at": "word:reprends", "offset": -0.05}, {"id": "cross", "at": "word:l'ordre"}]},
-
-  {"id": "trois", "type": "big_number", "enter": "zoom",
-   "say": "Fais plutôt ces trois trucs.", "show": "Fais plutôt ces 3 trucs.",
-   "params": {"number": "3", "word": "TRUCS"},
-   "colors": {"trois": "#2563EB"},
-   "cues": [{"id": "number", "at": "word:trois"}, {"id": "badges", "at": "word:trucs", "offset": -0.05}]},
-
-  {"id": "tri", "type": "sort_bins", "enter": "whip_left",
+   "params": {
+    "header": "SURTOUT",
+    "items": [
+     "Cours 1",
+     "Cours 2",
+     "Cours 3",
+     "Cours 4",
+     "Cours 5"
+    ],
+    "stamp": "PAS DANS L'ORDRE"
+   },
+   "emoji": {
+    "l'ordre": "cross-mark"
+   },
+   "colors": {
+    "l'ordre": "#E63946"
+   },
+   "cues": [
+    {
+     "id": "header",
+     "at": "word:Surtout"
+    },
+    {
+     "id": "list",
+     "at": "word:reprends",
+     "offset": -0.05
+    },
+    {
+     "id": "cross",
+     "at": "word:l'ordre"
+    }
+   ]
+  },
+  {
+   "id": "trois",
+   "type": "big_number",
+   "enter": "zoom",
+   "say": "Il y a trois étapes. Je te donne les deux premières.",
+   "show": "Il y a 3 étapes. Je te donne les 2 premières.",
+   "params": {
+    "number": "3",
+    "word": "ÉTAPES"
+   },
+   "colors": {
+    "trois": "#2563EB"
+   },
+   "cues": [
+    {
+     "id": "number",
+     "at": "word:trois"
+    },
+    {
+     "id": "badges",
+     "at": "word:étapes"
+    }
+   ]
+  },
+  {
+   "id": "tri",
+   "type": "sort_bins",
+   "enter": "whip_left",
    "say": "Un : fais le tri. Ce qui tombe à l'exam d'abord, le reste après.",
    "show": "1 : fais le tri. Ce qui tombe à l'exam d'abord, le reste après.",
-   "params": {"n": "1", "header": "FAIS LE TRI", "left": "D'ABORD", "left_emoji": "fire", "right": "APRÈS", "right_emoji": "zzz",
-              "cards": ["Cours 4", "TD 2", "Chap. 7", "Cours 1", "TD 5", "Chap. 3"]},
-   "emoji": {"abord": "fire", "après": "zzz"},
-   "cues": [{"id": "header", "at": "word:tri"}, {"id": "left", "at": "word:d'abord"}, {"id": "right", "at": "word:après"}]},
-
-  {"id": "planning", "type": "calendar", "enter": "whip_right",
+   "params": {
+    "n": "1",
+    "header": "FAIS LE TRI",
+    "left": "D'ABORD",
+    "left_emoji": "fire",
+    "right": "APRÈS",
+    "right_emoji": "zzz",
+    "cards": [
+     "Cours 4",
+     "TD 2",
+     "Chap. 7",
+     "Cours 1",
+     "TD 5",
+     "Chap. 3"
+    ]
+   },
+   "emoji": {
+    "abord": "fire",
+    "après": "zzz"
+   },
+   "cues": [
+    {
+     "id": "header",
+     "at": "word:tri"
+    },
+    {
+     "id": "left",
+     "at": "word:d'abord"
+    },
+    {
+     "id": "right",
+     "at": "word:après"
+    }
+   ]
+  },
+  {
+   "id": "planning",
+   "type": "calendar",
+   "enter": "whip_right",
    "say": "Deux : révise un peu chaque jour, jusqu'au partiel.",
    "show": "2 : révise un peu chaque jour, jusqu'au partiel.",
-   "params": {"n": "2", "header": "UN PEU CHAQUE JOUR", "chip": "PETITES SÉANCES", "chip_emoji": "stopwatch",
-              "special_label": "PARTIEL", "special_emoji": "graduation-cap"},
-   "emoji": {"partiel": "graduation-cap"},
-   "cues": [{"id": "header", "at": "word:révise"}, {"id": "chip", "at": "word:peu"}, {"id": "fill", "at": "word:chaque"}, {"id": "special", "at": "word:partiel"}]},
-
-  {"id": "test", "type": "versus", "enter": "whip_left",
-   "say": "Trois : au lieu de relire, teste-toi. C'est comme ça que ça rentre.",
-   "show": "3 : au lieu de relire, teste-toi. C'est comme ça que ça rentre.",
-   "params": {"n": "3", "header": "TESTE-TOI", "bad": "RELIRE", "bad_emoji": "open-book", "good": "SE TESTER", "good_emoji": "brain", "meter": "MÉMOIRE"},
-   "emoji": {"rentre": "brain"}, "colors": {"relire": "#E63946", "rentre": "#16A34A"},
-   "cues": [{"id": "header", "at": "word:teste-toi"}, {"id": "bad", "at": "word:relire"}, {"id": "good", "at": "word:C'est"},
-            {"id": "meter", "at": "word:comme"}, {"id": "meter_full", "at": "word:rentre"}]},
-
-  {"id": "produit", "type": "product_reveal", "enter": "zoom",
-   "say": "Mon guide et son planneur pour rattraper ton retard sont dans ma bio. Six euros quatre-vingt-dix.",
-   "show": "Mon guide et son planner pour rattraper ton retard sont dans ma bio. 6,90 € _",
-   "emoji": {"bio": "backhand-index-pointing-up"}, "colors": {"six": "#16A34A"},
-   "cues": [{"id": "shine", "at": "word:rattraper"}, {"id": "bio", "at": "word:bio"}, {"id": "price", "at": "word:Six"}]},
-
-  {"id": "fin", "type": "cta", "enter": "whip_right",
+   "params": {
+    "n": "2",
+    "header": "UN PEU CHAQUE JOUR",
+    "chip": "PETITES SÉANCES",
+    "chip_emoji": "stopwatch",
+    "special_label": "PARTIEL",
+    "special_emoji": "graduation-cap"
+   },
+   "emoji": {
+    "partiel": "graduation-cap"
+   },
+   "cues": [
+    {
+     "id": "header",
+     "at": "word:révise"
+    },
+    {
+     "id": "chip",
+     "at": "word:peu"
+    },
+    {
+     "id": "fill",
+     "at": "word:chaque"
+    },
+    {
+     "id": "special",
+     "at": "word:partiel"
+    }
+   ]
+  },
+  {
+   "id": "suite",
+   "type": "locked",
+   "enter": "whip_left",
+   "say": "La troisième, c'est la plus importante. Et elle est dans mon guide.",
+   "show": "La 3e, c'est la plus importante. Et elle est dans mon guide.",
+   "params": {
+    "header": "ET LA 3E ?",
+    "items": [
+     {
+      "text": "Faire le tri",
+      "open": true
+     },
+     {
+      "text": "Un peu chaque jour",
+      "open": true
+     },
+     {
+      "text": "Étape 3 : la plus importante",
+      "open": false
+     }
+    ],
+    "stamp": "DANS LE GUIDE"
+   },
+   "emoji": {
+    "guide": "locked"
+   },
+   "colors": {
+    "importante": "#E63946"
+   },
+   "cues": [
+    {
+     "id": "header",
+     "at": "word:La"
+    },
+    {
+     "id": "list",
+     "at": "word:troisième"
+    },
+    {
+     "id": "lock",
+     "at": "word:guide"
+    }
+   ]
+  },
+  {
+   "id": "produit",
+   "type": "product_reveal",
+   "enter": "zoom",
+   "say": "Le guide et son planneur sont dans ma bio. Six euros quatre-vingt-dix.",
+   "show": "Le guide et son planner sont dans ma bio. 6,90 € _",
+   "emoji": {
+    "bio": "backhand-index-pointing-up"
+   },
+   "colors": {
+    "six": "#16A34A"
+   },
+   "cues": [
+    {
+     "id": "shine",
+     "at": "word:planneur"
+    },
+    {
+     "id": "bio",
+     "at": "word:bio"
+    },
+    {
+     "id": "price",
+     "at": "word:Six"
+    }
+   ]
+  },
+  {
+   "id": "fin",
+   "type": "cta",
+   "enter": "whip_right",
    "say": "Commence ce soir. Pas demain.",
-   "params": {"line1": "CE SOIR", "line2": "PAS DEMAIN"},
-   "emoji": {"soir": "check-mark-button"}, "colors": {"demain": "#E63946"},
-   "cues": [{"id": "line1", "at": "word:soir"}, {"id": "line2", "at": "word:demain"}, {"id": "chip", "at": "word:demain", "offset": 0.4}]}
+   "params": {
+    "line1": "CE SOIR",
+    "line2": "PAS DEMAIN"
+   },
+   "emoji": {
+    "soir": "check-mark-button"
+   },
+   "colors": {
+    "demain": "#E63946"
+   },
+   "cues": [
+    {
+     "id": "line1",
+     "at": "word:soir"
+    },
+    {
+     "id": "line2",
+     "at": "word:demain"
+    },
+    {
+     "id": "chip",
+     "at": "word:demain",
+     "offset": 0.4
+    }
+   ]
+  }
  ]
 }

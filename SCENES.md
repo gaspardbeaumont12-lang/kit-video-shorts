@@ -17,7 +17,12 @@ Modèles complets et testés : `exemples/rattraper-retard.json` (compteur, liste
 - **Phrases courtes** : 4 à 10 mots, une idée par phrase, tutoiement, ton d'un pote qui donne un bon plan.
 - **Durée** : 25 à 35 s, 6 à 9 scènes, une seule idée forte par vidéo, avec une vraie valeur (une astuce utile, pas un mème).
 - **Accroche** : la 1re scène est une scène d'accroche (`hook_counter`, `hook_title` ou `quote`) ; son texte est à l'écran dès l'image 0.
-- **Le produit** arrive à la fin (`product_reveal`), jamais au début. Tu n'affirmes sur le produit que son titre, son sous-titre et son prix.
+- **Le produit** arrive à la fin (`product_reveal`), jamais au début. Tu n'affirmes sur le produit que son titre, son sous-titre et son prix,
+  plus ce qui est écrit dans la ligne « Contenu » du catalogue.
+- **Garde du mystère** (vidéos « produit ») : donne 1 ou 2 astuces complètes et vraiment utiles, jamais toute la méthode.
+  Juste avant `product_reveal`, une scène `locked` montre ce qu'on vient de voir (cases cochées) et ce qui reste à découvrir
+  (cases verrouillées 🔒 « ??? »), puis le tampon « DANS LE GUIDE ». Ce qui est verrouillé doit être VRAIMENT dans le produit
+  (ligne « Contenu » du catalogue) : jamais de faux secret, jamais de promesse de résultat.
 - **Nombres** : dans `say`, en toutes lettres (« vingt-cinq ») ; dans `show`, en chiffres (« 25 »). Même nombre de mots dans `say` et `show`
   (`_` dans `show` = fusionner avec le mot précédent, ex. `"say": "Six euros quatre-vingt-dix."`, `"show": "6,90 € _"`).
 - **Prononciation** : écris « planneur » dans `say` (sinon la voix dit « plané ») et « planner » dans `show`. Évite les sigles qui se prononcent mal.
@@ -49,7 +54,7 @@ Modèles complets et testés : `exemples/rattraper-retard.json` (compteur, liste
 - Option rare : `"gap_before"` (pause avant la scène, défaut 0,22 s), `"hold"` (temps après la voix), `"speed"` global (défaut 0,98).
 - Si `build.py` affiche **[ERREUR SCRIPT]**, lis le message (il donne les mots lus de la scène), corrige le JSON et relance.
 
-## 3. Les 13 types de scènes
+## 3. Les 14 types de scènes
 Chaque scène a un rôle visuel clair. Varie : jamais deux fois le même type d'affilée, et pas plus de 2 fois le même type par vidéo
 (sauf `product_reveal` et `cta`, une fois chacune à la fin).
 
@@ -66,21 +71,23 @@ Chaque scène a un rôle visuel clair. Varie : jamais deux fois le même type d'
 | `checklist` | en-tête + lignes qui arrivent et se cochent | ★`header`, ★`items` (3-5, ≤ 25 caractères), `n`, `header_emoji` | ★`header`, ★`i1`…`iN` |
 | `timer` | minuteur rond qui défile jusqu'à 00:00 puis passe au vert | ★`header`, ★`from` (« 25:00 »), `label`, `emoji`, `sub`, `sub_emoji`, `n` | ★`header`, ★`start`, ★`done`, `sub` |
 | `emoji_focus` | un emoji géant avec des ondes + un mot surligné + une petite phrase | ★`emoji`, ★`word` (1-3 mots), `sub`, `color` | ★`emoji`, ★`word`, `sub` |
+| `locked` | la suite verrouillée : cases cochées ✅ (ce qu'on a vu) + cases 🔒 « ??? » qui tremblent + tampon « DANS LE GUIDE » | ★`items` (2-4 : `{"text", "open": true/false, "blur": true/false}`, ≤ 30 caractères), `header` (ex. « ET LA 3E ? »), `header_emoji`, `stamp` | ★`list`, ★`lock` (mot « guide »), `header` |
 | `product_reveal` | montée sonore → boum, couverture en 3D, reflet, macaron prix, « LIEN EN BIO 👆 » | (lit le bloc `product`) `chip` | ★`bio`, ★`price`, `shine` |
 | `cta` | « COMMENCE… » + gros mot tamponné + 2e ligne avec un mot raturé + « LIEN EN BIO » | ★`line1`, `line2`, `strike` (mot raturé, défaut le dernier), `top`, `top_emoji`, `line1_emoji`, `chip` | ★`line1`, `line2`, `chip` |
 
 Astuce : place le repère `header` sur le 1er ou 2e mot de la scène pour que l'écran se remplisse tout de suite.
 
 ## 4. Structures qui marchent (choisis-en une par vidéo, varie sur la semaine)
-1. **Problème → 3 étapes** : `hook_counter` → `cross_list` (cut) → `big_number` → 3 scènes d'étape (`sort_bins` / `calendar` / `versus` / `checklist` / `timer`) → `product_reveal` → `cta`.
-2. **Erreur à éviter** : `hook_title` (« ARRÊTE DE… ») → `versus` → `emoji_focus` (pourquoi) → `checklist` (comment) → `product_reveal` → `cta`.
-3. **POV** : `quote` (ce qu'on se dit) → `emoji_focus` → `timer` ou `calendar` (la solution) → `checklist` → `product_reveal` → `cta`.
-4. **Méthode express** : `hook_title` → `big_number` → `timer` → `checklist` → `emoji_focus` → `product_reveal` → `cta`.
-5. **Compte à rebours** : `hook_counter` (jours avant l'examen) → `calendar` → `sort_bins` → `versus` → `product_reveal` → `cta`.
+Vidéos « produit » : toujours `locked` → `product_reveal` → `cta` à la fin. Vidéos « valeur pure » : pas de `locked` ni de `product_reveal`, et un `cta` dont la pastille est une vraie question.
+1. **Problème → 3 étapes, la 3e verrouillée** : `hook_counter` → `cross_list` (cut) → `big_number` (« il y a 3 étapes, je te donne les 2 premières ») → 2 scènes d'étape (`sort_bins` / `calendar` / `versus` / `checklist` / `timer`) → `locked` → `product_reveal` → `cta` (modèle : exemples/rattraper-retard.json).
+2. **Erreur à éviter** : `hook_title` (« ARRÊTE DE… ») → `versus` → `emoji_focus` (pourquoi) → `checklist` (le début du comment) → `locked` → `product_reveal` → `cta`.
+3. **POV** : `quote` (ce qu'on se dit) → `emoji_focus` → `timer` ou `calendar` (une solution) → `locked` → `product_reveal` → `cta`.
+4. **Méthode express** : `hook_title` → `big_number` → `timer` → `checklist` → `emoji_focus` → `product_reveal` → `cta` (modèle : exemples/methode-25-5.json ; ajoute `locked` avant le produit).
+5. **Compte à rebours** : `hook_counter` (jours avant l'examen) → `calendar` → `sort_bins` → `locked` → `product_reveal` → `cta`.
 
 ## 5. Bruitages disponibles (`"sfx"`)
 `whoosh`, `whoosh_big`, `swoosh`, `swoosh_x3`, `pop` (`pitch`), `pop_roll` (`n`, `spacing`), `tick`, `tick_roll` (`until`: id d'un repère),
-`impact`, `boom`, `scratch`, `marker`, `check`, `ding`, `buzz`, `riser`, `sparkle`, `kaching`, `alarm`, `none`.
+`impact`, `boom`, `scratch`, `marker`, `check`, `ding`, `buzz`, `riser`, `sparkle`, `kaching`, `alarm`, `lock`, `none`.
 Options d'un repère : `impact` (secousse 8-26), `punch` (coup de zoom 0,04-0,08), `flash` (0,3-0,6). Maximum 4 grosses secousses par vidéo.
 
 ## 6. Noms d'emojis utiles (Noto)
