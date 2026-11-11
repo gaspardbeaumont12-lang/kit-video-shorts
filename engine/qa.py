@@ -39,7 +39,7 @@ peak = float(Ps[-1]) if Ps else None
 dur = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", mp4], capture_output=True, text=True).stdout)
 size_mb = os.path.getsize(mp4) / 1e6
 alerts = []
-if not 18 <= dur <= 45: alerts.append(f"durée {dur:.1f} s hors de 18-45 s")
+if not 24 <= dur <= 40.5: alerts.append(f"durée {dur:.1f} s hors de 24-40 s")
 if I is None: alerts.append("pas de piste audio")
 elif not -15.5 <= I <= -12.5: alerts.append(f"volume {I} LUFS (cible -14)")
 if peak is not None and peak > -0.5: alerts.append(f"crête {peak} dBFS trop haute")

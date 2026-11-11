@@ -8,7 +8,9 @@ echo "1/4 Remotion (npm)…"
 cd "$KIT/remotion" && npm install --no-audit --no-fund --loglevel=error
 
 echo "2/4 Python (pip)…"
-pip install --break-system-packages -q kokoro-onnx soundfile scipy onnx numpy pillow >/dev/null 2>&1 || pip install --break-system-packages kokoro-onnx soundfile scipy onnx numpy pillow
+# python3 -m pip : installe pour le même Python que celui qui lance le kit (pip seul peut viser une autre version)
+python3 -m pip install --break-system-packages -q kokoro-onnx soundfile scipy onnx numpy pillow >/dev/null 2>&1 || python3 -m pip install --break-system-packages kokoro-onnx soundfile scipy onnx numpy pillow
+python3 -c "import kokoro_onnx, soundfile, scipy, onnx, numpy, PIL" || { echo "[ERREUR] paquets Python introuvables pour $(python3 --version)"; exit 1; }
 
 echo "3/4 Voix française (Kokoro)…"
 cd "$KIT/tts"

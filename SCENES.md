@@ -15,8 +15,8 @@ Modèles complets et testés : `exemples/rattraper-retard.json` (compteur, liste
 - **Mots simples** : ceux qu'un élève de 4e comprend sans réfléchir. Pas de jargon (« procrastiner » → « remettre à demain »,
   « optimiser » → « mieux faire », « mémorisation active » → « te poser des questions »).
 - **Phrases courtes** : 4 à 10 mots, une idée par phrase, tutoiement, ton d'un pote qui donne un bon plan.
-- **Durée** : 25 à 35 s, 6 à 9 scènes, une seule idée forte par vidéo, avec une vraie valeur (une astuce utile, pas un mème).
-- **Accroche** : la 1re scène est une scène d'accroche (`hook_counter`, `hook_title` ou `quote`) ; son texte est à l'écran dès l'image 0.
+- **Durée** : 27 à 32 s (le kit refuse en dessous de 24 s et au-dessus de 40 s), 6 à 9 scènes, une seule idée forte par vidéo, avec une vraie valeur (une astuce utile, pas un mème).
+- **Accroche** : la 1re scène est toujours `hook_title` ou `hook_counter` (le kit refuse les autres) : leur texte est à l'écran dès l'image 0. `quote` démarre presque vide : utilise-la en 2e scène, jamais en 1re.
 - **Le produit** arrive à la fin (`product_reveal`), jamais au début. Tu n'affirmes sur le produit que son titre, son sous-titre et son prix,
   plus ce qui est écrit dans la ligne « Contenu » du catalogue.
 - **Garde du mystère** (vidéos « produit ») : donne 1 ou 2 astuces complètes et vraiment utiles, jamais toute la méthode.
@@ -81,7 +81,7 @@ Astuce : place le repère `header` sur le 1er ou 2e mot de la scène pour que l'
 Vidéos « produit » : toujours `locked` → `product_reveal` → `cta` à la fin. Vidéos « valeur pure » : pas de `locked` ni de `product_reveal`, et un `cta` dont la pastille est une vraie question.
 1. **Problème → 3 étapes, la 3e verrouillée** : `hook_counter` → `cross_list` (cut) → `big_number` (« il y a 3 étapes, je te donne les 2 premières ») → 2 scènes d'étape (`sort_bins` / `calendar` / `versus` / `checklist` / `timer`) → `locked` → `product_reveal` → `cta` (modèle : exemples/rattraper-retard.json).
 2. **Erreur à éviter** : `hook_title` (« ARRÊTE DE… ») → `versus` → `emoji_focus` (pourquoi) → `checklist` (le début du comment) → `locked` → `product_reveal` → `cta`.
-3. **POV** : `quote` (ce qu'on se dit) → `emoji_focus` → `timer` ou `calendar` (une solution) → `locked` → `product_reveal` → `cta`.
+3. **POV** : `hook_title` (la situation, ex. « 22 H / FIN DU TAF ») → `quote` (ce qu'on se dit) → `emoji_focus` → `timer` ou `calendar` (une solution) → `locked` → `product_reveal` → `cta`.
 4. **Méthode express** : `hook_title` → `big_number` → `timer` → `checklist` → `emoji_focus` → `product_reveal` → `cta` (modèle : exemples/methode-25-5.json ; ajoute `locked` avant le produit).
 5. **Compte à rebours** : `hook_counter` (jours avant l'examen) → `calendar` → `sort_bins` → `locked` → `product_reveal` → `cta`.
 
@@ -100,4 +100,4 @@ Un nom inconnu bloque la fabrication avec un message clair.
 ## 7. Contrôle avant de livrer (obligatoire)
 Ouvre `*_planche.png` et vérifie : image 0 pleine et lisible ; aucun texte coupé ou caché ; rien qui déborde ;
 les sous-titres disent la même chose que la voix ; pas de scène vide plus d'une seconde. `*_qa.json` doit être sans alerte
-(durée 18-45 s, -14 LUFS, poids < 8 Mo). Sinon : corrige le JSON et relance `make_video.sh`.
+(durée 24-40 s, -14 LUFS, poids < 8 Mo). Sinon : corrige le JSON et relance `make_video.sh`.

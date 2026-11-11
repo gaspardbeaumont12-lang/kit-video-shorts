@@ -21,6 +21,9 @@ GAP_FIRST, GAP, HOLD = 0.06, 0.22, 0.15
 HOLD_BY_TYPE = {"product_reveal": 0.45}
 HOLD_LAST = 0.9
 
+DUR_MIN, DUR_MAX = 24, 40  # secondes (cible 27-32 s)
+
+
 def fail(msg):
     sys.exit(f"\n[ERREUR SCRIPT] {msg}\n")
 
@@ -508,8 +511,10 @@ def main():
         have = {c.get("id") for c in sc["cues"]}
         miss = [c for c in SCENE_TYPES[sc["type"]]["required"](sc) if c not in have]
         if miss: fail(f"Scène {sc['id']} ({sc['type']}) : repère(s) manquant(s) {miss}. Ajoute-les dans « cues » avec at: \"word:<mot>\".")
-    if S["scenes"][0]["type"] not in ("hook_counter", "hook_title", "quote", "emoji_focus", "big_number", "cross_list"):
-        print("  [!] La 1re scène n'est pas une scène d'accroche : vérifie que l'image 0 est forte.")
+    if S["scenes"][0]["type"] not in ("hook_counter", "hook_title"):
+        fail(f"La 1re scène est « {S['scenes'][0]['type']} » : elle doit être hook_title ou hook_counter, "
+             "les seules dont le texte est déjà à l'écran à l'image 0 (quote, par exemple, démarre presque vide). "
+             "Mets ton accroche en hook_title et déplace l'autre scène en 2e position.")
 
     # ---------- typographie française : espaces insécables avant ? ! : ; et dans « »
     def frtypo(v):
@@ -550,6 +555,9 @@ def main():
         print(f"- {sc['id']:10s} {sc['type']:15s} {start:6.2f}→{end:6.2f}s  « {sc['say']} »")
         t = end
     total = t
+    if total < DUR_MIN or total > DUR_MAX:
+        fail(f"Durée {total:.1f} s : il faut entre {DUR_MIN} et {DUR_MAX} s (cible 27 à 32 s). "
+             + ("Trop court : ajoute une phrase utile ou une scène." if total < DUR_MIN else "Trop long : enlève une scène ou raccourcis des phrases."))
     byid = {s["src"]["id"]: s for s in scenes}
 
     def resolve(at, s):
@@ -718,8 +726,6 @@ def main():
     json.dump({"duration": round(total, 2), "frames": tl["durationInFrames"], "bpm": bpm, "scenes": len(scenes), "pages": len(tl_pages)},
               open(os.path.join(WORK, "build.json"), "w"))
     print(f"Durée : {total:.2f} s ({tl['durationInFrames']} images) — {len(tl_pages)} pages de sous-titres — musique {bpm} BPM")
-    if total < 18 or total > 45:
-        print(f"  [!] Durée hors cible (18-45 s) : {total:.1f} s")
 
 if __name__ == "__main__":
     main()
