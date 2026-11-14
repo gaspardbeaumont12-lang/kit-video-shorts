@@ -16,8 +16,8 @@ REMOTION = os.path.join(KIT, "remotion")
 TTS_DIR = os.environ.get("TTS_DIR", os.path.join(KIT, "tts"))
 
 # ================================================================== réglages par défaut (rythme validé : ~0,875× du premier test)
-VOICE, SPEED = "ff_siwis", 0.98
-GAP_FIRST, GAP, HOLD = 0.06, 0.22, 0.15
+VOICE, SPEED = "ff_siwis", 0.92
+GAP_FIRST, GAP, HOLD = 0.06, 0.30, 0.18
 HOLD_BY_TYPE = {"product_reveal": 0.45}
 HOLD_LAST = 0.9
 

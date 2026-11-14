@@ -51,7 +51,7 @@ Modèles complets et testés : `exemples/rattraper-retard.json` (compteur, liste
 - `cues` (repères) : `{"id": "...", "at": "word:<mot>"}` = au début du mot ; `"word:<mot>:end"` = à la fin du mot ;
   `"word:ça#2"` = 2e fois que le mot est lu ; `"t:1.2"` = 1,2 s après le début de la scène ; `"offset": -0.05` pour décaler.
   Chaque repère déclenche une animation ET son bruitage par défaut (tu peux changer avec `"sfx": "pop"`, `"vol": 0.5`, ou `"sfx": "none"`).
-- Option rare : `"gap_before"` (pause avant la scène, défaut 0,22 s), `"hold"` (temps après la voix), `"speed"` global (défaut 0,98).
+- Option rare : `"gap_before"` (pause avant la scène, défaut 0,30 s), `"hold"` (temps après la voix), `"speed"` global (défaut 0,92).
 - Si `build.py` affiche **[ERREUR SCRIPT]**, lis le message (il donne les mots lus de la scène), corrige le JSON et relance.
 
 ## 3. Les 14 types de scènes
