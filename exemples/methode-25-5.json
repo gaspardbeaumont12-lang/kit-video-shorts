@@ -11,18 +11,14 @@
    "id": "hook",
    "type": "hook_title",
    "enter": "none",
-   "say": "Quatre heures de révision… et rien ne reste ?",
-   "show": "4 heures de révision… et rien ne reste ?",
+   "say": "Quatre heures de révision, et rien ? Voilà pourquoi.",
+   "show": "4 heures de révision, et rien ? Voilà pourquoi.",
    "params": {
     "lines": [
      "4H DE",
      "RÉVISION…",
      {
-      "text": "ET RIEN",
-      "color": "#E63946"
-     },
-     {
-      "text": "NE RESTE ?",
+      "text": "ET RIEN ?",
       "color": "#E63946"
      }
     ],
@@ -39,10 +35,6 @@
     {
      "id": "l2",
      "at": "word:rien"
-    },
-    {
-     "id": "l3",
-     "at": "word:reste"
     }
    ]
   },

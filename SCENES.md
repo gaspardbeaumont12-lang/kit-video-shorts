@@ -16,7 +16,7 @@ Modèles complets et testés : `exemples/rattraper-retard.json` (compteur, liste
   « optimiser » → « mieux faire », « mémorisation active » → « te poser des questions »).
 - **Phrases courtes** : 4 à 10 mots, une idée par phrase, tutoiement, ton d'un pote qui donne un bon plan.
 - **Durée** : 27 à 32 s (le kit refuse en dessous de 24 s et au-dessus de 40 s), 6 à 9 scènes, une seule idée forte par vidéo, avec une vraie valeur (une astuce utile, pas un mème).
-- **Accroche** : la 1re scène est toujours `hook_title` ou `hook_counter` (le kit refuse les autres) : leur texte est à l'écran dès l'image 0. `quote` démarre presque vide : utilise-la en 2e scène, jamais en 1re.
+- **Accroche** : c'est là que tout se joue (les statistiques TikTok montrent que la plupart des gens partent avant 2 secondes). La 1re scène est toujours `hook_title` (le kit refuse les autres) : **2 ou 3 lignes, 6 mots au plus à l'écran, 12 caractères par ligne**, une seule idée qui interpelle tout de suite la bonne personne (« PARTIEL / DANS 3 JOURS ? », « TU BOSSES / ET TU RÉVISES ? »). La 1re phrase dite fait **8 mots au plus** et dit la même chose que l'écran ; la 2e promet la réponse (« Voilà quoi faire. »). Pas de sous-titres pendant l'accroche (le kit les retire). `hook_counter`, `quote` et les autres viennent en 2e scène ou après.
 - **Le produit** arrive à la fin (`product_reveal`), jamais au début. Tu n'affirmes sur le produit que son titre, son sous-titre et son prix,
   plus ce qui est écrit dans la ligne « Contenu » du catalogue.
 - **Garde du mystère** (vidéos « produit ») : donne 1 ou 2 astuces complètes et vraiment utiles, jamais toute la méthode.
@@ -61,13 +61,13 @@ Chaque scène a un rôle visuel clair. Varie : jamais deux fois le même type d'
 | type | ce qu'on voit | params (★ = obligatoire) | repères (★ = obligatoire) |
 |---|---|---|---|
 | `hook_counter` | titre en 2 étiquettes + compteur géant qui grimpe + pile de cartes qui tombe | ★`count_to`, ★`label`, `count_from` (≈ 1/3 de count_to), `title` (1-2 lignes), `title_emoji`, `cards` (6-10 mots courts), `suffix` (« % », « h »), `end_emoji`, `alarm_emoji` | ★`count_end` (fin du chiffre lu), `alarm` |
-| `hook_title` | phrase choc en 2-4 gros blocs, entière dès l'image 0, chaque bloc « tape » quand il est lu | ★`lines` (2-4 lignes ≤ 11 caractères ; `{"text":…, "color":…}` possible), `emoji` | ★`l1`…`l(n-1)` (mot de chaque ligne suivante), `emoji` |
+| `hook_title` | phrase choc en 2-3 gros blocs (6 mots au plus), entière dès l'image 0, chaque bloc « tape » quand il est lu | ★`lines` (2-3 lignes ≤ 12 caractères ; `{"text":…, "color":…}` possible), `emoji` | ★`l1`…`l(n-1)` (mot de chaque ligne suivante), `emoji` |
 | `quote` | bulles de messages (POV, ce qu'on se dit) avec « … en train d'écrire » | ★`messages` (2-4 : `{"text", "side": "left"/"right", "emoji"}`, ≤ 40 caractères), `header` (ex. « TOI, LA VEILLE DU PARTIEL : ») | ★`m1`…`mN`, `header` |
 | `cross_list` | « ⚠️ STOP » + liste qui arrive + grande croix rouge + tampon | ★`items` (3-5), `header` (défaut « SURTOUT »), `header_emoji`, `stamp` | ★`list`, ★`cross`, `header` |
 | `big_number` | disque jaune « ?! » puis gros chiffre tamponné + pastilles numérotées | ★`number`, `word` (« TRUCS », « ERREURS »…), `badges`, `teaser`, `color` | ★`number`, `badges` |
 | `sort_bins` | en-tête d'étape + cartes qui volent dans deux bacs | ★`header`, ★`left`, ★`right`, ★`cards` (4-6), `n` (numéro d'étape), `left_emoji`, `right_emoji` | ★`header`, ★`left`, ★`right` |
 | `calendar` | en-tête + calendrier qui se remplit + jour spécial | ★`header`, `n`, `chip`, `chip_emoji`, `weeks` (2-5), `skip_weekends`, `special_label`, `special_emoji`, `special_day` | ★`header`, ★`fill`, `chip`, `special` (obligatoires si les params existent) |
-| `versus` | mauvaise méthode barrée contre bonne méthode cochée (+ jauge) | ★`header`, ★`bad`, ★`good`, `n`, `bad_emoji`, `good_emoji`, `meter` (mot de la jauge), `meter_emoji` | ★`header`, ★`bad`, ★`good`, `meter` + `meter_full` (si jauge) |
+| `versus` | mauvaise méthode barrée contre bonne méthode cochée (+ jauge) | ★`header`, ★`bad` et ★`good` (15 caractères au plus chacun), `n`, `bad_emoji`, `good_emoji`, `meter` (mot de la jauge), `meter_emoji` | ★`header`, ★`bad`, ★`good`, `meter` + `meter_full` (si jauge) |
 | `checklist` | en-tête + lignes qui arrivent et se cochent | ★`header`, ★`items` (3-5, ≤ 25 caractères), `n`, `header_emoji` | ★`header`, ★`i1`…`iN` |
 | `timer` | minuteur rond qui défile jusqu'à 00:00 puis passe au vert | ★`header`, ★`from` (« 25:00 »), `label`, `emoji`, `sub`, `sub_emoji`, `n` | ★`header`, ★`start`, ★`done`, `sub` |
 | `emoji_focus` | un emoji géant avec des ondes + un mot surligné + une petite phrase | ★`emoji`, ★`word` (1-3 mots), `sub`, `color` | ★`emoji`, ★`word`, `sub` |
@@ -79,7 +79,7 @@ Astuce : place le repère `header` sur le 1er ou 2e mot de la scène pour que l'
 
 ## 4. Structures qui marchent (choisis-en une par vidéo, varie sur la semaine)
 Vidéos « produit » : toujours `locked` → `product_reveal` → `cta` à la fin. Vidéos « valeur pure » : pas de `locked` ni de `product_reveal`, et un `cta` dont la pastille est une vraie question.
-1. **Problème → 3 étapes, la 3e verrouillée** : `hook_counter` → `cross_list` (cut) → `big_number` (« il y a 3 étapes, je te donne les 2 premières ») → 2 scènes d'étape (`sort_bins` / `calendar` / `versus` / `checklist` / `timer`) → `locked` → `product_reveal` → `cta` (modèle : exemples/rattraper-retard.json).
+1. **Problème → 3 étapes, la 3e verrouillée** : `hook_title` (« T'AS 30 / COURS DE / RETARD ? ») → `hook_counter` (cut) → `cross_list` (cut) → `big_number` (« il y a 3 étapes, je te donne les 2 premières ») → 2 scènes d'étape (`sort_bins` / `calendar` / `versus` / `checklist` / `timer`) → `locked` → `product_reveal` → `cta` (modèle : exemples/rattraper-retard.json).
 2. **Erreur à éviter** : `hook_title` (« ARRÊTE DE… ») → `versus` → `emoji_focus` (pourquoi) → `checklist` (le début du comment) → `locked` → `product_reveal` → `cta`.
 3. **POV** : `hook_title` (la situation, ex. « 22 H / FIN DU TAF ») → `quote` (ce qu'on se dit) → `emoji_focus` → `timer` ou `calendar` (une solution) → `locked` → `product_reveal` → `cta`.
 4. **Méthode express** : `hook_title` → `big_number` → `timer` → `checklist` → `emoji_focus` → `product_reveal` → `cta` (modèle : exemples/methode-25-5.json ; ajoute `locked` avant le produit).
@@ -100,4 +100,4 @@ Un nom inconnu bloque la fabrication avec un message clair.
 ## 7. Contrôle avant de livrer (obligatoire)
 Ouvre `*_planche.png` et vérifie : image 0 pleine et lisible ; aucun texte coupé ou caché ; rien qui déborde ;
 les sous-titres disent la même chose que la voix ; pas de scène vide plus d'une seconde. `*_qa.json` doit être sans alerte
-(durée 24-40 s, -14 LUFS, poids < 8 Mo). Sinon : corrige le JSON et relance `make_video.sh`.
+(durée 24-40 s, -14 LUFS, poids < 10 Mo). Sinon : corrige le JSON et relance `make_video.sh`.

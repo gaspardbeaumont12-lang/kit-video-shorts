@@ -681,7 +681,7 @@ export const Cta: React.FC<P> = ({ scene }) => {
           ) : <span key={i}>{w}</span>)}
         </div>
       )}
-      <Chip text={p.chip ?? "LIEN EN BIO"} emoji={p.chip_emoji ?? "backhand-index-pointing-up"} at={cue(scene, "chip", Math.max(so, de) + 12)} x={540} y={1010} rot={2} bg={C.red} size={58} bounce />
+      <Chip text={p.chip ?? "LIEN EN BIO"} emoji={p.chip_emoji ?? (/BIO|LIEN/i.test(p.chip ?? "LIEN EN BIO") ? "backhand-index-pointing-up" : "speech-balloon")} at={cue(scene, "chip", Math.max(so, de) + 12)} x={540} y={1010} rot={2} bg={C.red} size={58} bounce />
     </AbsoluteFill>
   );
 };

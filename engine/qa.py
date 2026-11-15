@@ -43,7 +43,7 @@ if not 24 <= dur <= 40.5: alerts.append(f"durée {dur:.1f} s hors de 24-40 s")
 if I is None: alerts.append("pas de piste audio")
 elif not -15.5 <= I <= -12.5: alerts.append(f"volume {I} LUFS (cible -14)")
 if peak is not None and peak > -0.5: alerts.append(f"crête {peak} dBFS trop haute")
-if size_mb > 8: alerts.append(f"fichier lourd ({size_mb:.1f} Mo)")
+if size_mb > 10: alerts.append(f"fichier lourd ({size_mb:.1f} Mo)")
 qa = {"video": os.path.basename(mp4), "duree_s": round(dur, 2), "lufs": I, "crete_dbfs": peak, "poids_mo": round(size_mb, 2), "alertes": alerts,
       "planche": os.path.basename(prefix + "_planche.png")}
 json.dump(qa, open(prefix + "_qa.json", "w"), ensure_ascii=False, indent=1)

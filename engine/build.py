@@ -453,7 +453,7 @@ def tts(text, voice, speed):
 
 # ================================================================== emojis utilisés (Noto, Apache-2.0)
 EMOJI_DEFAULTS = ["sparkles", "warning", "check-mark-button", "cross-mark", "crescent-moon", "backhand-index-pointing-up",
-                  "alarm-clock", "anxious-face-with-sweat", "graduation-cap", "stopwatch", "backhand-index-pointing-down", "locked"]
+                  "alarm-clock", "anxious-face-with-sweat", "graduation-cap", "stopwatch", "backhand-index-pointing-down", "locked", "speech-balloon"]
 
 def collect_emojis(obj, out):
     if isinstance(obj, dict):
@@ -511,10 +511,28 @@ def main():
         have = {c.get("id") for c in sc["cues"]}
         miss = [c for c in SCENE_TYPES[sc["type"]]["required"](sc) if c not in have]
         if miss: fail(f"Scène {sc['id']} ({sc['type']}) : repère(s) manquant(s) {miss}. Ajoute-les dans « cues » avec at: \"word:<mot>\".")
-    if S["scenes"][0]["type"] not in ("hook_counter", "hook_title"):
-        fail(f"La 1re scène est « {S['scenes'][0]['type']} » : elle doit être hook_title ou hook_counter, "
-             "les seules dont le texte est déjà à l'écran à l'image 0 (quote, par exemple, démarre presque vide). "
-             "Mets ton accroche en hook_title et déplace l'autre scène en 2e position.")
+    # ---------- accroche : une seule idée courte, lisible en moins d'une seconde
+    h = S["scenes"][0]
+    if h["type"] != "hook_title":
+        fail(f"La 1re scène est « {h['type']} » : elle doit être hook_title (2 ou 3 lignes, 6 mots au plus). "
+             "Les spectateurs décident en 1 à 2 secondes : une image chargée (chiffre + cartes + titre) les fait partir. "
+             "Mets hook_counter, quote ou les autres en 2e scène.")
+    hl = [l["text"] if isinstance(l, dict) else l for l in h["params"].get("lines", [])]
+    nmots = len(" ".join(hl).split())
+    if not 2 <= len(hl) <= 3 or nmots > 6:
+        fail(f"Accroche : {len(hl)} ligne(s) et {nmots} mots à l'écran. Il faut 2 ou 3 lignes et 6 mots au plus "
+             "(ex. « PARTIEL / DANS 3 JOURS ? »).")
+    longues = [l for l in hl if len(l) > 12]
+    if longues: fail(f"Accroche : ligne(s) trop longue(s) {longues} (12 caractères au plus).")
+    premiere = re.split(r"(?<=[.?!…])\s", h["say"].strip())[0]
+    if len(premiere.split()) > 8:
+        fail(f"Accroche : la 1re phrase dite fait {len(premiere.split())} mots (« {premiere} »). 8 mots au plus, "
+             "et elle doit dire la même chose que le texte à l'écran.")
+    for sc in S["scenes"]:
+        if sc["type"] == "versus":
+            for k in ("bad", "good"):
+                v = sc["params"].get(k); v = v.get("text", "") if isinstance(v, dict) else (v or "")
+                if len(v) > 15: fail(f"Scène {sc['id']} (versus) : « {v} » fait {len(v)} caractères, 15 au plus (sinon illisible).")
 
     # ---------- typographie française : espaces insécables avant ? ! : ; et dans « »
     def frtypo(v):
@@ -697,7 +715,9 @@ def main():
 
     # ---------- timeline pour Remotion
     def F(x): return int(round(x * fps))
-    allw = [dict(w, scene=s["src"]["id"]) for s in scenes for w in s["words"]]
+    # pas de sous-titres pendant l'accroche : son texte est déjà en grand à l'écran (une seule chose à lire)
+    allw = [dict(w, scene=s["src"]["id"]) for k, s in enumerate(scenes) for w in s["words"]
+            if not (k == 0 and s["src"]["type"] == "hook_title")]
     pages, cur = [], []
     for i, w in enumerate(allw):
         cur.append(w); nxt = allw[i + 1] if i + 1 < len(allw) else None

@@ -9,10 +9,44 @@
  "scenes": [
   {
    "id": "hook",
-   "type": "hook_counter",
+   "type": "hook_title",
    "enter": "none",
-   "say": "T'as trente cours de retard et les partiels arrivent ?",
-   "show": "T'as 30 cours de retard et les partiels arrivent ?",
+   "say": "T'as trente cours de retard ?",
+   "show": "T'as 30 cours de retard ?",
+   "params": {
+    "lines": [
+     "T'AS 30",
+     {
+      "text": "COURS DE",
+      "color": "#E63946"
+     },
+     {
+      "text": "RETARD ?",
+      "color": "#E63946"
+     }
+    ],
+    "emoji": "anxious-face-with-sweat"
+   },
+   "colors": {
+    "trente": "#E63946"
+   },
+   "cues": [
+    {
+     "id": "l1",
+     "at": "word:cours"
+    },
+    {
+     "id": "l2",
+     "at": "word:retard"
+    }
+   ]
+  },
+  {
+   "id": "compteur",
+   "type": "hook_counter",
+   "enter": "cut",
+   "say": "Et les partiels arrivent. Voilà quoi faire.",
+   "show": "Et les partiels arrivent. Voilà quoi faire.",
    "params": {
     "title": [
      "SI T'AS DÉCROCHÉ",
@@ -36,21 +70,19 @@
     ]
    },
    "emoji": {
-    "retard": "anxious-face-with-sweat",
     "partiels": "alarm-clock"
    },
    "colors": {
-    "trente": "#E63946",
-    "retard": "#E63946"
+    "partiels": "#E63946"
    },
    "cues": [
     {
      "id": "count_end",
-     "at": "word:retard:end"
+     "at": "word:partiels"
     },
     {
      "id": "alarm",
-     "at": "word:partiels"
+     "at": "word:arrivent"
     }
    ]
   },
