@@ -518,7 +518,7 @@ def main():
              "Les spectateurs décident en 1 à 2 secondes : une image chargée (chiffre + cartes + titre) les fait partir. "
              "Mets hook_counter, quote ou les autres en 2e scène.")
     hl = [l["text"] if isinstance(l, dict) else l for l in h["params"].get("lines", [])]
-    nmots = len(" ".join(hl).split())
+    nmots = len([w for w in " ".join(hl).split() if re.search(r"\w", w)])  # « : », « ? » ou « ! » seuls ne comptent pas
     if not 2 <= len(hl) <= 3 or nmots > 6:
         fail(f"Accroche : {len(hl)} ligne(s) et {nmots} mots à l'écran. Il faut 2 ou 3 lignes et 6 mots au plus "
              "(ex. « PARTIEL / DANS 3 JOURS ? »).")
