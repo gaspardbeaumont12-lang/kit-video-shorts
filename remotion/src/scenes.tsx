@@ -85,9 +85,11 @@ export const HookTitle: React.FC<P> = ({ scene }) => {
   const top = 300, avail = (p.emoji ? 1010 : 1110) - top;
   const longest = Math.max(...lines.map((l) => l.text.length), 1);
   const fs = Math.min(fitFont("x".repeat(longest), 900, 175, 64, 0.7), Math.floor(avail / (n * 1.38)));
-  const lastAt = cue(scene, `l${n - 1}`, (n - 1) * 6);
-  const emojiAt = cue(scene, "emoji", lastAt + 6);
-  const ep = sp(f, emojiAt, fps, { damping: 9, stiffness: 240 });
+  // L'image de l'accroche est là dès l'image 0, au centre sous le texte (la moitié basse de l'écran ne reste jamais vide) ;
+  // elle « saute » quand la voix dit son mot (repère « emoji »).
+  const emojiAt = cue(scene, "emoji", -1);
+  const eEnter = sp(f, -30, fps, SLAM);
+  const eHit = emojiAt >= 0 && f >= emojiAt ? Math.exp(-(f - emojiAt) / 6) : 0;
   return (
     <AbsoluteFill>
       {p.burst !== false && <Burst cx={540} cy={700} opacity={0.32} />}
@@ -107,9 +109,10 @@ export const HookTitle: React.FC<P> = ({ scene }) => {
           );
         })}
       </div>
-      {p.emoji && f >= emojiAt && (
-        <div style={{ position: "absolute", right: 50, top: 1020, transform: `scale(${ep}) rotate(${(1 - ep) * 50 + Math.sin(f / 5) * 6}deg)` }}>
-          <Emoji name={p.emoji} size={185} />
+      {p.emoji && (
+        <div style={{ position: "absolute", left: 0, right: 0, top: 1035, display: "flex", justifyContent: "center",
+          transform: `translateY(${Math.sin(f / 9) * 10}px) scale(${eEnter * (1 + 0.2 * eHit)}) rotate(${Math.sin(f / 7) * 5 + eHit * 8}deg)` }}>
+          <Emoji name={p.emoji} size={280} />
         </div>
       )}
     </AbsoluteFill>

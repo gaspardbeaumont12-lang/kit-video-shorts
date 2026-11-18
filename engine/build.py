@@ -271,7 +271,7 @@ SCENE_TYPES = {
                      "defaults": {"_start": {"sfx": "boom", "vol": 0.9, "impact": 26},
                                   "count_end": {"sfx": "impact", "vol": 0.75, "impact": 18, "punch": 0.07},
                                   "alarm": {"sfx": "alarm", "vol": 0.45}}},
-    "hook_title": {"required": lambda sc: [f"l{i}" for i in range(1, _n_lines(sc))], "params": ["lines"],
+    "hook_title": {"required": lambda sc: [f"l{i}" for i in range(1, _n_lines(sc))], "params": ["lines", "emoji"],
                    "defaults": {"_start": {"sfx": "boom", "vol": 0.9, "impact": 24},
                                 **{f"l{i}": {"sfx": "impact", "vol": 0.55, "impact": 10, "punch": 0.04, "seed": 11 + i} for i in range(1, 5)},
                                 "emoji": {"sfx": "pop", "vol": 0.7}}},
